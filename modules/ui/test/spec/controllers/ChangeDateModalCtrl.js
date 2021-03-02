@@ -61,7 +61,7 @@ describe('ChangeDateModalCtrl', function () {
         it('should not throw on input with endTime before now', function () {
             createController(scope.experiment);
             scope.originalEndTime = moment().format('YYYY-MM-DDTHH:mm:ssZZ');
-            scope.experiment.endTime = moment("2013-03-24").format('YYYY-MM-DDTHH:mm:ssZZ');
+            scope.experiment.endTime = moment('2013-03-24').format('YYYY-MM-DDTHH:mm:ssZZ');
             var testFn = function () {
                 scope.ok(false);
             };

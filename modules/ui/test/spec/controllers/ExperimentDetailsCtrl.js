@@ -2,14 +2,14 @@
 
 describe('ExperimentDetailsCtrl', function () {
 
-    var scope, createController, state, modal;
+    var scope, createController, state;
     
     beforeEach(module('wasabi', 'ui.router', 'wasabi.controllers'));
     beforeEach(inject(function($rootScope, $controller, $stateParams){
         scope = $rootScope.$new();
         state = $stateParams;
-        state['readonly'] = 'false';
-        state['openedFromModal'] = 'false';
+        state.readonly = 'false';
+        state.openedFromModal = 'false';
 
         createController = function () {
             return $controller('ExperimentDetailsCtrl', {

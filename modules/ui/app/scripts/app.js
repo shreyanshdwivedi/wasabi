@@ -179,8 +179,8 @@ angular.module('wasabi', [
     /*
      * watch transitions/routes to the next page/URL and prevents if user is not authorized or signed in
      */
-    .run(['$rootScope', '$state', 'AUTH_EVENTS', 'AuthUtilsFactory', 'ConfigFactory', 'DialogsFactory', 'Session', 'AuthFactory', '$stateParams', '$window', 'UtilitiesFactory', 'StateFactory', 'injectScript',
-        function ($rootScope, $state, AUTH_EVENTS, AuthUtilsFactory, ConfigFactory, DialogsFactory, Session, AuthFactory, $stateParams, $window, UtilitiesFactory, StateFactory, injectScript) {
+    .run(['$rootScope', '$scope', '$state', 'AUTH_EVENTS', 'AuthUtilsFactory', 'ConfigFactory', 'DialogsFactory', 'Session', 'AuthFactory', '$stateParams', '$window', 'UtilitiesFactory', 'StateFactory', 'injectScript',
+        function ($rootScope, $scope, $state, AUTH_EVENTS, AuthUtilsFactory, ConfigFactory, DialogsFactory, Session, AuthFactory, $stateParams, $window, UtilitiesFactory, StateFactory, injectScript) {
             if (injectScript) {
                 var node = document.createElement('script');
                 node.src = injectScript;
@@ -214,6 +214,7 @@ angular.module('wasabi', [
                         $state.go('experiments');
                     }
                 };
+                console.log(transitionToFirstPage);
 
                 var authorizedRoles = next.data.authorizedRoles;
                 if(authorizedRoles) {

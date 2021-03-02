@@ -69,7 +69,7 @@ describe('UserModalCtrl', function () {
             AuthzFactory: mockAuthzFactory,
             AuthFactory: mockAuthFactory,
             DialogsFactory: mockDialogsFactory
-        })
+        });
     });
     beforeEach(inject(function($rootScope, $controller, _$location_, $httpBackend){
         $location = _$location_;

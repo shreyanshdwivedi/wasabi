@@ -14,6 +14,59 @@ angular.module('wasabi.directives').directive('dragList', ['$compile', 'Prioriti
             var $row, $rows, $visibleRows, $dragRow, yDiff, startY, maxY, rowIndex, visIndex, rowTop, rowHeight, firstRowTop, scrollTimer,
                 mouseDown = false, dragging = false, suppressDrag = false;
 
+            // supporting functions
+            function savePriorityChange($rows) {
+                // Extract the IDs for all the rows, in order, and save the new priority order.
+                var orderedIds = [];
+                for (var i=1; i < $rows.length; i++) {
+                    orderedIds.push($rows.eq(i).data('id') + '');
+                }
+                var appName = $rows.eq(1).data('application-name');
+                PrioritiesFactory.update({
+                    'applicationName': appName,
+                    'experimentIDs': orderedIds
+                }).$promise.then(function () {
+                    // Nothing needs doing here after we've reordered the experiment priorities
+                    UtilitiesFactory.trackEvent('saveItemSuccess',
+                        {key: 'dialog_name', value: 'experimentsRePrioritized'},
+                        {key: 'application_name', value: appName});
+
+                    UtilitiesFactory.displaySuccessWithCacheWarning('Experiment Priorities Changed', 'Your experiment priority changes have been saved.');
+                }, function(response) {
+                    // Handler error
+                    //console.log(response);
+                    // TODO: Should revert to the previous positions...
+                    UtilitiesFactory.handleGlobalError(response, 'Your experiment priorities could not be changed.');
+                });
+
+            }
+
+            function createDragElement($row, y) {
+                var i, $dragCells,
+                    $rowCells = $row.children(),
+                    n = $rowCells.length,
+                    l = $row.offset().left + 16,
+                    t = y || $row.offset().top;
+
+                $dragRow = $('<div id="dragRow" class="tableContainer"><table></table></div>').css({'left':l, 'top':t});
+                $dragRow.find('table').append($row.clone());
+                // set the width of the cells
+                $dragCells = $dragRow.find('td');
+                for (i = 0; i < n; i++) {
+                    $dragCells.eq(i).css('width', $rowCells.eq(i).width());
+                }
+                $dragRow.appendTo($('body'));
+            }
+
+            // can't rely on CSS becuase rows can be hidden
+            function rowShading() {
+                var i, $rows = $('#' + listId + ' tr:visible'), n = $rows.length;
+
+                for (i = 1; i < n; i++) {
+                    $rows.eq(i).css('background', i % 2 === 0? 'rgb(246,247,248)':'white');
+                }
+            }
+
             // direct priority assignment
             function doInputChange() {
                 var $input = $(this),
@@ -94,6 +147,30 @@ angular.module('wasabi.directives').directive('dragList', ['$compile', 'Prioriti
                 $dragRow.one('transitionend', changeIndex).css('transform', 'translate3d(-17px,' + ($rows.eq(a).offset().top - $row.offset().top + 3) + 'px,0)');
             }
             // end direct priority assignment
+
+            function doDragEnd() {
+                dragging = false;
+                clearInterval(scrollTimer);
+                $row.find('input.priorityInput').val(rowIndex);
+                if (rowIndex < $row[0].rowIndex) {
+                    $row.insertAfter($rows.eq(rowIndex - 1));
+                }else {
+                    $row.insertAfter($rows.eq(rowIndex));
+                }
+                $rows = $('#' + listId).find('tr');
+                rowShading();
+                $dragRow.css('box-shadow', 'none').animate({'left':$row.offset().left, 'top':$row.offset().top}, 80, function() {
+                    $dragRow.remove();
+                    $dragRow = null;
+                    $('#dropArrow').remove();
+                    $row.removeClass('moving');
+                });
+
+                // TODO: tooltips.enable();
+
+                savePriorityChange($rows);
+            }
+            // end drag & drop reorder behavior
 
             // drag & drop reorder behavior
             $('#' + listId).on('mousedown', 'tr', function(e) {
@@ -260,83 +337,6 @@ angular.module('wasabi.directives').directive('dragList', ['$compile', 'Prioriti
                     doDragEnd();
                 }
             });
-
-            function doDragEnd() {
-                dragging = false;
-                clearInterval(scrollTimer);
-                $row.find('input.priorityInput').val(rowIndex);
-                if (rowIndex < $row[0].rowIndex) {
-                    $row.insertAfter($rows.eq(rowIndex - 1));
-                }else {
-                    $row.insertAfter($rows.eq(rowIndex));
-                }
-                $rows = $('#' + listId).find('tr');
-                rowShading();
-                $dragRow.css('box-shadow', 'none').animate({'left':$row.offset().left, 'top':$row.offset().top}, 80, function() {
-                    $dragRow.remove();
-                    $dragRow = null;
-                    $('#dropArrow').remove();
-                    $row.removeClass('moving');
-                });
-
-                // TODO: tooltips.enable();
-
-                savePriorityChange($rows);
-            }
-            // end drag & drop reorder behavior
-
-            // supporting functions
-            function savePriorityChange($rows) {
-                // Extract the IDs for all the rows, in order, and save the new priority order.
-                var orderedIds = [];
-                for (var i=1; i < $rows.length; i++) {
-                    orderedIds.push($rows.eq(i).data('id') + '');
-                }
-                var appName = $rows.eq(1).data('application-name');
-                PrioritiesFactory.update({
-                    'applicationName': appName,
-                    'experimentIDs': orderedIds
-                }).$promise.then(function () {
-                    // Nothing needs doing here after we've reordered the experiment priorities
-                    UtilitiesFactory.trackEvent('saveItemSuccess',
-                        {key: 'dialog_name', value: 'experimentsRePrioritized'},
-                        {key: 'application_name', value: appName});
-
-                    UtilitiesFactory.displaySuccessWithCacheWarning('Experiment Priorities Changed', 'Your experiment priority changes have been saved.');
-                }, function(response) {
-                    // Handler error
-                    //console.log(response);
-                    // TODO: Should revert to the previous positions...
-                    UtilitiesFactory.handleGlobalError(response, 'Your experiment priorities could not be changed.');
-                });
-
-            }
-
-            function createDragElement($row, y) {
-                var i, $dragCells,
-                    $rowCells = $row.children(),
-                    n = $rowCells.length,
-                    l = $row.offset().left + 16,
-                    t = y || $row.offset().top;
-
-                $dragRow = $('<div id="dragRow" class="tableContainer"><table></table></div>').css({'left':l, 'top':t});
-                $dragRow.find('table').append($row.clone());
-                // set the width of the cells
-                $dragCells = $dragRow.find('td');
-                for (i = 0; i < n; i++) {
-                    $dragCells.eq(i).css('width', $rowCells.eq(i).width());
-                }
-                $dragRow.appendTo($('body'));
-            }
-
-            // can't rely on CSS becuase rows can be hidden
-            function rowShading() {
-                var i, $rows = $('#' + listId + ' tr:visible'), n = $rows.length;
-
-                for (i = 1; i < n; i++) {
-                    $rows.eq(i).css('background', i % 2 === 0? 'rgb(246,247,248)':'white');
-                }
-            }
         }
 
         return {

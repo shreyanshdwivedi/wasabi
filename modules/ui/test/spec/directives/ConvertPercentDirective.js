@@ -23,7 +23,7 @@ describe('ConvertPercentDirective', function () {
     });
 
     it('should handle number', function () {
-        scope.myModel = .053;
+        scope.myModel = 0.053;
         scope.$digest();
 
         var value = el.val();

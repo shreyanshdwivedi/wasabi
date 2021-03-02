@@ -58,6 +58,7 @@ The following steps will help you install the needed tools, then build and run a
 % git clone https://github.com/intuit/wasabi.git
 % cd wasabi
 % ./bin/wasabi.sh bootstrap
+% export JAVA_HOME=$(/usr/libexec/java_home -v 1.8) # in ~/.bashrc or ~/.zshrc file
 ```
 
 Installed tools include: [homebrew 0.9](http://brew.sh), [git 2](https://git-scm.com),

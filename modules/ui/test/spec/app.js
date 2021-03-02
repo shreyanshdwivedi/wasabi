@@ -1,6 +1,7 @@
 'use strict';
 
 var apiHostBaseUrl = 'http://localhost:8080/api/v1';
+console.log(apiHostBaseUrl);
 
 describe('app', function () {
 

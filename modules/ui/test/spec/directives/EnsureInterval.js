@@ -32,7 +32,7 @@ describe('EnsureInterval', function () {
     });
 
     it('should handle number in range', function () {
-        form.ensureIntervalInput.$setViewValue(.5);
+        form.ensureIntervalInput.$setViewValue(0.5);
         scope.$digest();
 
         expect(scope.myModel).to.eql(0.5);

@@ -348,6 +348,9 @@ angular.module('wasabi.controllers')
                         }
                     };
 
+                    var creatingNewApplication = (experiment.applicationName === ConfigFactory.newApplicationNamePrompt);
+                    var appName = (creatingNewApplication ? experiment.applicationName2 : experiment.applicationName);
+                    
                     var continueWithCreation = function() {
                         if ($scope.simpleRuleEditing) {
                             // User was using the widgets to edit the rule, we need to convert them to the string to save.
@@ -480,8 +483,6 @@ angular.module('wasabi.controllers')
                         );
                     };
 
-                    var creatingNewApplication = (experiment.applicationName === ConfigFactory.newApplicationNamePrompt);
-                    var appName = (creatingNewApplication ? experiment.applicationName2 : experiment.applicationName);
                     $scope.transferTags(false); // Transfer from the widget to the experiment.
                     if (creatingNewApplication) {
                         // We need to check for and prevent the user from creating an experiment in an existing

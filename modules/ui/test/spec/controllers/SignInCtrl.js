@@ -12,15 +12,15 @@ describe('SignInCtrl', function () {
                         then: function(doneFunc) {
                             var adminPerms = {permissionsList: [
                                 {
-                                    applicationName: "QBO",
-                                    permissions: ["create", "read", "update", "delete", "admin"]
+                                    applicationName: 'QBO',
+                                    permissions: ['create', 'read', 'update', 'delete', 'admin']
                                 },
                                 {
-                                    applicationName: "TTO",
-                                    permissions: ["create", "read", "update", "delete", "admin"]
+                                    applicationName: 'TTO',
+                                    permissions: ['create', 'read', 'update', 'delete', 'admin']
                                 }
                             ]};
-                            if (options && options.userId && options.userId == 'myuser') {
+                            if (options && options.userId && options.userId === 'myuser') {
                                 doneFunc(adminPerms);
                             }
                             else {

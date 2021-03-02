@@ -311,6 +311,7 @@ describe('ExperimentModalCtrl', function () {
                 rule: 'ohai'
             };
             var controller = createController([scope.experiment], scope.experiment, true, ['angularjs', 'angularjs2'], []);
+            console.log(controller);
             expect(ConfigFactory.newApplicationNamePrompt).to.eql(scope.experiment.applicationName);
             var testFn = function () {
                 scope.changed();
@@ -332,6 +333,7 @@ describe('ExperimentModalCtrl', function () {
                 rule: 'ohai'
             };
             var controller = createController([scope.experiment], scope.experiment, true, ['angularjs', 'angularjs2'], []);
+            console.log(controller);
             var testFn = function () {
                 scope.stateName('CLOSED');
             };
@@ -352,6 +354,7 @@ describe('ExperimentModalCtrl', function () {
                 rule: 'ohai'
             };
             var controller = createController([scope.experiment], scope.experiment, true, ['angularjs', 'angularjs2'], []);
+            console.log(controller);
             scope.oldAppName = ConfigFactory.newApplicationNamePrompt;
             var testFn = function () {
                 scope.handleNewApplication();

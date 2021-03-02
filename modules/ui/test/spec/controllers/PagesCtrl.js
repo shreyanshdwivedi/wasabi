@@ -55,7 +55,7 @@ describe('PagesCtrl', function () {
             DialogsFactory: mockDialogsFactory,
             ExperimentsFactory: mockExperimentsFactory,
             ApplicationsFactory: mockApplicationsFactory
-        })
+        });
     });
     beforeEach(inject(function($rootScope, $controller){
         scope = $rootScope.$new();

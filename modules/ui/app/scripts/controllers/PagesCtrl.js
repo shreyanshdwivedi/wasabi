@@ -47,6 +47,16 @@ angular.module('wasabi.controllers').
                 });
             };
 
+            // This just removes the page from the local list of global pages used for autocomplete.  That way,
+            // after you have selected one of those global pages to associate with this experiment, the page
+            // won't be presented as a choice on autocomplete.
+            var removePageFromGlobal = function(page) {
+                var pageLoc = $.inArray(page, $scope.pagesData.groupPages);
+                if (pageLoc > -1) {
+                    $scope.pagesData.groupPages.splice( pageLoc, 1 );
+                }
+            };
+
             // Initially, remove all the items currently in our list from the global list kept locally.
             $scope.initPages = function() {
                 if ($scope.pages && $scope.pages.length > 0) {
@@ -58,16 +68,6 @@ angular.module('wasabi.controllers').
 
             // init controller
             $scope.loadGlobalPages();
-
-            // This just removes the page from the local list of global pages used for autocomplete.  That way,
-            // after you have selected one of those global pages to associate with this experiment, the page
-            // won't be presented as a choice on autocomplete.
-            var removePageFromGlobal = function(page) {
-                var pageLoc = $.inArray(page, $scope.pagesData.groupPages);
-                if (pageLoc > -1) {
-                    $scope.pagesData.groupPages.splice( pageLoc, 1 );
-                }
-            };
 
             var clearPageInput = function() {
                 setTimeout(function() {

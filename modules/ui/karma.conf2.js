@@ -7,7 +7,7 @@ module.exports = function(config) {
     basePath: '',
 
     // testing framework to use (jasmine/mocha/qunit/...)
-    frameworks: ['mocha', 'chai', 'sinon'],
+    frameworks: ['mocha', 'chai', 'es6-shim'],
 
     // list of files / patterns to load in the browser
     files: [
@@ -40,6 +40,7 @@ module.exports = function(config) {
       'app/bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/tooltip.js',
       'app/bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/popover.js',
       'app/bower_components/moment/moment.js',
+      'node_modules/es6-shim/es6-shim.js',
       'node_modules/sinon/pkg/sinon.js',
       'node_modules/chai/chai.js',
       'node_modules/sinon-chai/lib/sinon-chai.js',

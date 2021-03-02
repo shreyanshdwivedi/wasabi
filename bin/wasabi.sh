@@ -15,9 +15,9 @@
 # limitations under the License.
 ###############################################################################
 
-formulas=("bash" "cask" "git" "git-flow-avh" "maven" "wget" "ruby" "node")
-taps=("caskroom/cask")
-casks=("java" "docker")
+formulas=("bash" "cask" "git" "git-flow-avh" "maven" "wget" "ruby" "node" "adoptopenjdk8")
+taps=("homebrew/cask")
+casks=("docker")
 profile_default=development
 endpoint_default=localhost:8080
 verify_default=false
@@ -112,8 +112,7 @@ bootstrap() {
     done
 
     for cask in "${casks[@]}"; do
-      [[ $(brew cask list ${cask} 2>/dev/null) ]] && brew cask uninstall --force ${cask} 2>/dev/null
-      brew cask install --force ${cask}
+      brew install --cask --force ${cask}
     done
 
     npm config set prefix $(brew --prefix)
@@ -136,9 +135,10 @@ bootstrap() {
     #Install Maven
     sudo apt-get update
     sudo apt-get install -y maven
+    sudo apt-get install -y git
 
     #Install JAVA
-    sudo apt-get install -y default-jdk
+    sudo apt-get install -y openjdk-8-jdk
     sudo cp /etc/environment /tmp/environment
     sudo chmod 666 /tmp/environment
     sudo echo "JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/" >> /tmp/environment
@@ -149,7 +149,7 @@ bootstrap() {
     sudo apt-get install -y git-flow
 
     #Install Nodejs
-    curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+    curl -sL https://deb.nodesource.com/setup_15.x | sudo -E bash -
     sudo apt-get install -y nodejs
     sudo npm install -g bower
     sudo npm install -g grunt-cli
