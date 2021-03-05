@@ -15,7 +15,7 @@
 # limitations under the License.
 ###############################################################################
 
-formulas=("bash" "cask" "git" "git-flow-avh" "maven" "wget" "ruby" "node" "adoptopenjdk8")
+formulas=("bash" "cask" "git" "git-flow-avh" "maven" "wget" "ruby" "node")
 taps=("homebrew/cask")
 casks=("docker")
 profile_default=development

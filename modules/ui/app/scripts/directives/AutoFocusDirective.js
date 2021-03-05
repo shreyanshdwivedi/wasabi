@@ -2,7 +2,7 @@
 
 'use strict';
 
-angular.module('wasabi.directives').directive('autoFocus', function($timeout) {
+angular.module('wasabi.directives').directive('autoFocus', ['$timeout', function($timeout) {
     return {
         restrict: 'AC',
         link: function(_scope, _element) {
@@ -17,4 +17,4 @@ angular.module('wasabi.directives').directive('autoFocus', function($timeout) {
             }, 100);
         }
     };
-});
+}]);
