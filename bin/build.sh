@@ -73,11 +73,11 @@ module=main
 
 [[ "${build}" != "true" && "${build}" != "false" ]] && usage "invalid build parameter" 1
 [[ "${test}" != "true" && "${test}" != "false" ]] && usage "invalid test parameter" 1
-[ ! -e ./modules/main/target/wasabi-main-*-SNAPSHOT-${profile}-all.jar ] && build_jar=true
+[ ! -e ./modules/main/target/wasabi-main-*-SNAPSHOT-*-all.jar ] && build_jar=true
 
 if [[ "${build}" = true || "${test}" = true || "${build_jar}" = true ]]; then
   [ "${build}" = true ] && package=package
-  [ ! -e ./modules/main/target/wasabi-main-*-SNAPSHOT-${profile}-all.jar ] && package=package
+  [ ! -e ./modules/main/target/wasabi-main-*-SNAPSHOT-*-all.jar ] && package=package
   [ "${test}" = true ] && tests="org.jacoco:jacoco-maven-plugin:prepare-agent findbugs:check test"
 
   mvn ${WASABI_MAVEN} -P${profile} clean ${tests:--Dmaven.test.skip=true} ${package} javadoc:aggregate || \
@@ -131,7 +131,7 @@ if [[ "${build}" = true || "${build_js}" = true ]]; then
       sudo gem install compass
     fi
   fi
-  (cd ./modules/ui && npm install && bower install && grunt build)
+  (cd ./modules/ui && npm install --force && bower install && grunt build)
 fi
 
 content=${home}/${id}/content/ui/dist

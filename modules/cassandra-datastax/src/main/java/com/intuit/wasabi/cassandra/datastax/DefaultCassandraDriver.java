@@ -98,7 +98,7 @@ public class DefaultCassandraDriver implements CassandraDriver {
                         getConfiguration().getPassword()
                 );
 
-                if (getConfiguration().getTokenAwareLoadBalancingLocalDC().isPresent() &&
+                /*if (getConfiguration().getTokenAwareLoadBalancingLocalDC().isPresent() &&
                         getConfiguration().getTokenAwareLoadBalancingUsedHostsPerRemoteDc() >= 0) {
                     builder.withLoadBalancingPolicy(
                             new TokenAwarePolicy(
@@ -117,7 +117,7 @@ public class DefaultCassandraDriver implements CassandraDriver {
                                     new RoundRobinPolicy()
                             )
                     );
-                }
+                }*/
 
 
                 //Add default query options for consistency

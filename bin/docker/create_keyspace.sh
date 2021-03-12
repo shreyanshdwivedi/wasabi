@@ -4,7 +4,7 @@
 # the original cqlsh have hard coded protocol version of 4.
 # the current [2016-10-01] version of server spec is [Cassandra 2.1.15 | CQL spec 3.2.1 | Native protocol v3]
 echo "cqlsh " \
-     "--cqlversion=\"${CQLSH_VERSION:-3.2.1}\" "\
+     "--cqlversion=\"${CQLSH_VERSION:-3.4.4}\" "\
      "-e \"CREATE KEYSPACE IF NOT EXISTS ${CASSANDRA_KEYSPACE_PREFIX:-wasabi}_experiments WITH replication = {'class' : 'SimpleStrategy', 'replication_factor' : ${CASSANDRA_REPLICATION:-1}};\"" \
      "--username=${CQLSH_USERNAME}" \
      "--password=\"${CQLSH_PASSWORD}\"" \
@@ -13,7 +13,7 @@ echo "cqlsh " \
 
 while ! nc -w 1 -z ${CQLSH_HOST:-localhost} ${CASSANDRA_PORT:-9042}; do sleep 0.1; done
 
-cqlsh --cqlversion="${CQLSH_VERSION:-3.2.1}" \
+cqlsh --cqlversion="${CQLSH_VERSION:-3.4.4}" \
     -e "CREATE KEYSPACE IF NOT EXISTS ${CASSANDRA_KEYSPACE_PREFIX:-wasabi}_experiments WITH replication = {'class' : 'SimpleStrategy', 'replication_factor' : ${CASSANDRA_REPLICATION:-1}};" \
     --username=${CQLSH_USERNAME} \
     --password="${CQLSH_PASSWORD}" \

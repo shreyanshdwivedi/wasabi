@@ -23,7 +23,7 @@ public interface DefaultCassandraConstant {
     /**
      * Default Cassandra version
      */
-    public static final String DEFAULT_CASSANDRA_VERSION = "2.0";
+    public static final String DEFAULT_CASSANDRA_VERSION = "3.0";
 
     /**
      * Default CQL version
