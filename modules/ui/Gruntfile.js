@@ -93,20 +93,20 @@ module.exports = function (grunt) {
                 options: {
                     base: '<%= yeoman.dist %>'
                 }
-            },
-            distsecure: {
-                options: {
-                    base: [
-                        '.tmp',
-                        '<%= yeoman.app %>'
-                    ],
-                    protocol: 'https',
-                    port: 443,
-                    key: grunt.file.read('server.key').toString(),
-                    cert: grunt.file.read('server.crt').toString(),
-                    ca: grunt.file.read('ca.crt').toString()
-                }
             }
+            // distsecure: {
+            //     options: {
+            //         base: [
+            //             '.tmp',
+            //             '<%= yeoman.app %>'
+            //         ],
+            //         protocol: 'https',
+            //         port: 443,
+            //         key: grunt.file.read('server.key').toString(),
+            //         cert: grunt.file.read('server.crt').toString(),
+            //         ca: grunt.file.read('ca.crt').toString()
+            //     }
+            // }
         },
 
         // Make sure code styles are up to par and there are no obvious mistakes
